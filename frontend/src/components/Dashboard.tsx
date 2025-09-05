@@ -9,7 +9,7 @@ import Icon from './Icon';
 type DashboardProps = Record<string, never>;
 
 const Dashboard: FC<DashboardProps> = () => {
-    const { address } = useAccount();
+    useAccount(); // address not currently used; invoke hook for potential future use
     const demo = DEMO_MODE;
     const progress = useDemoProgress();
     const stats = {

@@ -3,8 +3,8 @@
 import { FC, useEffect, useState } from 'react';
 import { useCharacterData } from '@/hooks/useCharacterData';
 import { DEMO_MODE, ALLOW_NON_ENS } from '@/lib/wagmi';
-import { ensNamehash, normalizeEns, resolveEnsAddress } from '@/lib/ens';
-import Icon from './Icon';
+import { normalizeEns, resolveEnsAddress } from '@/lib/ens';
+import Icon, { IconName } from './Icon';
 
 interface CharacterCreationProps {
     ensName?: string;
@@ -26,28 +26,28 @@ const CharacterCreation: FC<CharacterCreationProps> = ({
             id: 'warrior',
             name: 'Warrior',
             description: 'Master of combat and strength',
-            icon: 'sword',
+            icon: 'sword' as IconName,
             stats: { strength: 8, intelligence: 4, dexterity: 6, luck: 5 }
         },
         {
             id: 'mage',
             name: 'Mage',
             description: 'Wielder of arcane magic',
-            icon: 'target',
+            icon: 'target' as IconName,
             stats: { strength: 3, intelligence: 9, dexterity: 5, luck: 6 }
         },
         {
             id: 'rogue',
             name: 'Rogue',
             description: 'Master of stealth and cunning',
-            icon: 'shield',
+            icon: 'shield' as IconName,
             stats: { strength: 5, intelligence: 6, dexterity: 9, luck: 8 }
         },
         {
             id: 'paladin',
             name: 'Paladin',
             description: 'Holy warrior with divine power',
-            icon: 'achievement',
+            icon: 'achievement' as IconName,
             stats: { strength: 7, intelligence: 6, dexterity: 4, luck: 7 }
         }
     ];
@@ -183,7 +183,7 @@ const CharacterCreation: FC<CharacterCreationProps> = ({
                 `}
                                 >
                                     <div className="flex items-center space-x-3 mb-3">
-                                        <span className="text-3xl"><Icon name={charClass.icon as any} size={36} /></span>
+                                        <span className="text-3xl"><Icon name={charClass.icon} size={36} /></span>
                                         <div>
                                             <h3 className="text-lg font-bold">{charClass.name}</h3>
                                             <p className="text-sm text-gray-400">{charClass.description}</p>

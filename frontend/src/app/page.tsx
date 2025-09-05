@@ -2,7 +2,7 @@
 'use client';
 
 import { Suspense, useEffect, useMemo, useState } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useAccount, useEnsName, useSwitchChain } from 'wagmi';
 import { baseSepolia } from 'wagmi/chains';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
@@ -26,7 +26,6 @@ function HomeInner() {
   const hasWalletConnect = Boolean(process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID);
   const searchParams = useSearchParams();
   const [exploreMode, setExploreMode] = useState(false);
-  const router = useRouter();
 
   const onWrongNetwork = useMemo(() => {
     return isConnected && chain && chain.id !== baseSepolia.id;

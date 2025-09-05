@@ -1,6 +1,6 @@
 "use client";
 import { useCallback, useEffect, useState } from 'react';
-import { DEMO_KEYS, loadDemo, saveDemo } from '@/lib/demo';
+import { loadDemo, saveDemo } from '@/lib/demo';
 
 interface DemoActivity {
     id: string;
