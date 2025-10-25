@@ -1,32 +1,38 @@
-import { getDefaultConfig } from '@rainbow-me/rainbowkit';
 import { base, baseSepolia, mainnet } from 'wagmi/chains';
 import { createConfig, http } from 'wagmi';
 import { createPublicClient, http as viemHttp } from 'viem';
+import { walletConnect, injected } from 'wagmi/connectors';
 
 const projectId = process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID;
 const baseSepoliaRpc = process.env.NEXT_PUBLIC_BASE_SEPOLIA_RPC_URL;
 export const DEMO_MODE = process.env.NEXT_PUBLIC_DEMO_MODE === '1';
 export const ALLOW_NON_ENS = process.env.NEXT_PUBLIC_ALLOW_NON_ENS === '1';
 
-export const config = projectId
-    ? getDefaultConfig({
-        appName: 'NameQuest',
-        projectId,
-        // Prefer Base Sepolia first so wallet UIs default to it
-        chains: [baseSepolia, base, mainnet],
-        ssr: true,
-    })
-    : createConfig({
-        // Prefer Base Sepolia first for read-only defaults
-        chains: [baseSepolia, base, mainnet],
-        transports: {
-            [base.id]: http(),
-            [baseSepolia.id]: http(baseSepoliaRpc),
-            [mainnet.id]: http(),
-        },
-        multiInjectedProviderDiscovery: false,
-        ssr: true,
-    });
+const metadata = {
+    name: 'NameQuest',
+    description: 'NameQuest - An ENS-powered gaming platform',
+    url: typeof window !== 'undefined' ? window.location.origin : 'https://namequest.app',
+    icons: [typeof window !== 'undefined' ? `${window.location.origin}/favicon.ico` : ''],
+};
+
+export const config = createConfig({
+    chains: [baseSepolia, base, mainnet],
+    transports: {
+        [base.id]: http(),
+        [baseSepolia.id]: http(baseSepoliaRpc),
+        [mainnet.id]: http(),
+    },
+    connectors: [
+        injected({ shimDisconnect: true }),
+        ...(projectId ? [walletConnect({
+            projectId,
+            metadata,
+            showQrModal: true,
+        })] : []),
+    ],
+    multiInjectedProviderDiscovery: false,
+    ssr: true,
+});
 
 // Shared read-only public client (Base Sepolia) for client-side utilities
 export const publicClient = createPublicClient({

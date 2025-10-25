@@ -5,7 +5,7 @@ import { Suspense, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useAccount, useEnsName, useSwitchChain } from 'wagmi';
 import { baseSepolia } from 'wagmi/chains';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+import ConnectButton from '@/components/ConnectButton';
 import LandingPage from '@/components/LandingPage';
 import CharacterCreation from '@/components/CharacterCreation';
 import Dashboard from '@/components/Dashboard';
